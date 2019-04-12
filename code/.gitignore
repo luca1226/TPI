@@ -88,4 +88,7 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+# Ignore built doc folder
+docs/html
+
 # End of https://www.gitignore.io/api/node

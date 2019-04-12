@@ -1,0 +1,17 @@
+{
+  "watch": [
+    "src/**/*.js"
+  ],
+  "ignore": [
+    "**/*.test.js",
+    "**/*.spec.js",
+    ".git",
+    "node_modules"
+  ],
+  "exec": "babel-node src/index.js",
+  "ext": "js",
+  "env": {
+    "NODE_ENV": "development",
+    "PORT": 3000
+  }
+}

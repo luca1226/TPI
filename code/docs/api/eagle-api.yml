@@ -1,0 +1,8 @@
+openapi: 3.0.0
+info:
+  title: Hach Device Management
+  version: 1.0.0
+  description: Hach Device Management API documentation
+paths: {}
+components: {}
+tags: []
