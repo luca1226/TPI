@@ -12,6 +12,10 @@
   "ext": "js",
   "env": {
     "NODE_ENV": "development",
+    "HOST": "localhost",
+    "DATABASEUSER": "tpiUser",
+    "DATABASEPASSWORD": "tpiPassword",
+    "DATABASENAME": "SC4200c",
     "PORT": 3000
   }
 }

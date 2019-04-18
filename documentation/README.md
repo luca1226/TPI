@@ -1,4 +1,4 @@
-# TPI Project
+# TPI documentation
 
 * This project has been created for the TPI of Luca Saccone.
 * That's an API that communicates with a database.
