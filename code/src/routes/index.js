@@ -29,6 +29,7 @@ export default () => {
   // router.prefix('/v1')
 
   // all defined routes into the router
-
+  router.use('/devices', require('./devices').routes)
+  router.use('/devicesWithAllParameters', require('./devicesWithAllParameters').routes)
   return router
 }

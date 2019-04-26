@@ -4,24 +4,12 @@
  * @author Luca Saccone
  * @module
  */
-import mysql from 'mysql'
 import app from './app'
 // import log from './utils/logger'
 
 const logHeader = 'Device Management API server'
 
 console.log(`Node environment: ${process.env.NODE_ENV}`)
-
-export const connection = mysql.createConnection({
-  host: process.env.HOST,
-  user: process.env.DATABASEUSER,
-  password: process.env.DATABASEPASSWORD,
-  database: process.env.DATABASENAME
-})
-
-connection.connect(
-  console.log('Connected to the database')
-)
 
 /**
  * Convert API server address into a descriptive string

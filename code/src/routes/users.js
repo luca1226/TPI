@@ -1,3 +1,4 @@
+
 /**
  * @swagger
  * tags:
@@ -10,14 +11,13 @@
  * components:
  *       schemas:
  *          Users:
+ *             description: Schema of users
  *             type: object
  *             properties:
  *                email:
  *                   type: string
  *                   description: email of the user
- *                   format: email
  *                password:
  *                   type: string
  *                   description: password of the user
- *                   format: password
  */

@@ -13,7 +13,7 @@
 /**
  * The koa logging middleware function
  * @param {Context} ctx - the koa context of the received request.
- * @param {() => Promise<any>} next - the function to call to pass the request to the next middleware.
+ * @param {Promise} next - the function to call to pass the request to the next middleware.
  */
 const logMiddleware = async (ctx, next) => {
   const startTime = Date.now()

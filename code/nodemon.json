@@ -15,7 +15,7 @@
     "HOST": "localhost",
     "DATABASEUSER": "tpiUser",
     "DATABASEPASSWORD": "tpiPassword",
-    "DATABASENAME": "SC4200c",
+    "DATABASENAME": "SC4200c_development",
     "PORT": 3000
   }
 }

@@ -6,11 +6,12 @@
   "scripts": {
     "start": "nodemon",
     "lint": "eslint src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:unit": "cross-env NODE_ENV=test mocha 'src/**/*.spec.js'",
+    "test:unit:watch": "cross-env NODE_ENV=test mocha -w 'src/**/*.spec.js'",
     "doc:code": "jsdoc -d ./docs/html --debug -r \"./src/\" -t node_modules/minami -R ./README.md",
     "doc:api:folder": "mkdirp docs/api",
-    "doc:api:create": "swagger-jsdoc -d swaggerDef.js -o docs/api/eagle-api.yml src/**/*.js",
-    "doc:api:validate": "lint-openapi -d docs/api/eagle-api.yml",
+    "doc:api:create": "swagger-jsdoc -d swaggerDef.js -o docs/api/device-management-api.yml src/**/*.js",
+    "doc:api:validate": "lint-openapi -d docs/api/device-management-api.yml",
     "doc:api": "npm run doc:api:folder && npm run doc:api:create && npm run doc:api:validate"
   },
   "keywords": [
@@ -23,15 +24,19 @@
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
     "@babel/node": "^7.2.2",
+    "@babel/polyfill": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
+    "@babel/register": "^7.4.0",
+    "chai": "^4.2.0",
+    "class-validator": "^0.9.1",
     "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
-    "ibm-openapi-validator": "^0.2.4",
+    "ibm-openapi-validator": "^0.3.1",
     "jsdoc": "^3.5.5",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
@@ -39,8 +44,20 @@
     "koa-response-time": "^2.1.0",
     "koa-router": "^7.4.0",
     "minami": "^1.2.3",
-    "mysql": "^2.16.0",
+    "mocha": "^6.1.4",
+    "mysql": "^2.17.1",
     "nodemon": "^1.18.11",
-    "swagger-jsdoc": "^3.2.8"
+    "swagger-jsdoc": "^3.2.9",
+    "testdouble": "^3.11.0"
+  },
+  "mocha": {
+    "require": "@babel/register",
+    "extension": [
+      "js"
+    ],
+    "reporter": "spec",
+    "slow": 50,
+    "timeout": 5000,
+    "ui": "bdd"
   }
 }
