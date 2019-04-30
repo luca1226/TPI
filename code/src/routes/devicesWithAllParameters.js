@@ -32,7 +32,7 @@
  *                   description: name of the second probe of the devices
 
  */
-import * as controller from '../controllers/databaseRequest'
+import * as databaseRequest from '../controllers/databaseRequest'
 var Router = require('koa-router')
 
 /**
@@ -40,26 +40,52 @@ var Router = require('koa-router')
  * @param {Context} ctx - Koa context; Encapsulate request and response
  */
 export const devicesGet = async (ctx) => {
-  const devices = await controller.getDevicesWithAllParameters()
-  ctx.body = {
-    'Controllers with all parameters existing in the database': devices
-  }
+  const rows = await databaseRequest.getDevicesWithAllParameters()
+  let jsonArray = []
+  rows.forEach(element => {
+    const stringify = JSON.stringify(element)
+    const parse = JSON.parse(stringify)
+
+    jsonArray.push(parse)
+  })
+  const devices = { devices: jsonArray }
+  ctx.body = JSON.stringify(devices)
 }
 
 export const devicesPost = async (ctx) => {
-  controller.insertDevice(ctx.request.body.serialNumber, ctx.request.body.connectivity, ctx.request.body.probe1, ctx.request.body.probe2)
+  const serialNumber = ctx.request.body.serialNumber
+  const connectivity = ctx.request.body.connectivity
+  const firstProbe = ctx.request.body.probe1
+  const secondProbe = ctx.request.body.probe2
+  if (serialNumber === '') {
+    ctx.throw(400, 'Serial Number is empty')
+  } else if (connectivity === '') {
+    ctx.throw(400, 'Connectivity is empty')
+  } else if (firstProbe === '') {
+    ctx.throw(400, 'First probe is empty')
+  } else if (secondProbe === '') {
+    ctx.throw(400, 'Second probe is empty')
+  }
+
+  const serialNumberIsInTheDatabase = await databaseRequest.getSerialNumber(serialNumber)
+  if (undefined !== serialNumberIsInTheDatabase && serialNumberIsInTheDatabase.length === 0) {
+    ctx.throw(400, 'Serial number is already in the database')
+  }
+  databaseRequest.insertDevice(serialNumber, connectivity, firstProbe, secondProbe)
+
   ctx.body = {
-    'serial Number': ctx.request.body.serialNumber,
-    'connectivity': ctx.request.body.connectivity,
-    'probe 1': ctx.request.body.probe1,
-    'probe 2': ctx.request.body.probe2
+    'serial Number': serialNumber,
+    'connectivity': connectivity,
+    'probe 1': firstProbe,
+    'probe 2': secondProbe
   }
 }
 
 export const deviceDelete = async (ctx) => {
-  controller.deleteDevice(ctx.params.id)
+  const id = ctx.params.id
+  await databaseRequest.deleteDevice(id)
   ctx.body = {
-    'Device id deleted': ctx.params.id
+    id
   }
 }
 

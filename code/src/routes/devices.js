@@ -23,7 +23,7 @@
  *                   description: serial number of the devices
  */
 
-import * as controller from '../controllers/databaseRequest'
+import * as databaseRequest from '../controllers/databaseRequest'
 var Router = require('koa-router')
 
 /**
@@ -31,11 +31,16 @@ var Router = require('koa-router')
  * @param {Context} ctx - Koa context; Encapsulate request and response
  */
 export const devicesGet = async (ctx) => {
-  const devices = await controller.getDevices()
+  const rows = await databaseRequest.getDevices()
+  let jsonArray = []
+  rows.forEach(element => {
+    const stringify = JSON.stringify(element)
+    const parse = JSON.parse(stringify)
 
-  ctx.body = {
-    'Controllers existing in the database': devices
-  }
+    jsonArray.push(parse)
+  })
+  const devices = { devices: jsonArray }
+  ctx.body = JSON.stringify(devices)
 }
 
 const router = new Router()

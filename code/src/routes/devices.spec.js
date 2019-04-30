@@ -1,24 +1,50 @@
 import 'mocha'
-// import * as td from 'testdouble'
+import * as td from 'testdouble'
 import { context } from '../../test/mock-utility' /*, expectMiddlewareFunctionThrow */
-import { devicesGet } from './devices'
 import { expect } from 'chai'
 
 describe('Routes for devices', () => {
-  describe('GET', () => {
-    it.skip('should return all devices in the database', async () => {
-      await devicesGet(context)
+  /** The module under test (SUT) */
+  let sut
+  /** the require done by the SUT that wil be mock */
+  let mock
 
-      expect(context.body).to.deep.equal({
-        'Controllers existing in the database': [
-          {
-            'serial number': 'HL001_17386_000001729708'
-          },
-          {
-            'serial number': 'HL001_17386_000001729711'
-          }
-        ]
-      })
+  beforeEach(() => {
+    mock = td.replace('../controllers/databaseRequest')
+    sut = require('./devices')
+  })
+
+  afterEach(() => {
+    td.reset()
+  })
+
+  describe('GET', () => {
+    it('returns valid json devices', async () => {
+      // act
+      const expected = '{"devices":[{"serial number":"HL001_17386_000001729709"}]}'
+      const actual = [{ 'serial number': 'HL001_17386_000001729709' }]
+      td.when(mock.getDevices()).thenResolve(actual)
+
+      // arrange
+      await sut.devicesGet(context)
+
+      // assert
+      const devices = context.body
+      expect(devices).to.deep.equal(expected)
+    })
+
+    it('returns valid json devices when database is empty', async () => {
+      // act
+      const expected = '{"devices":[]}'
+      const actual = []
+      td.when(mock.getDevices()).thenResolve(actual)
+
+      // arrange
+      await sut.devicesGet(context)
+
+      // assert
+      const devices = context.body
+      expect(devices).to.deep.equal(expected)
     })
   })
 })

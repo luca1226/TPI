@@ -31,5 +31,6 @@ export default () => {
   // all defined routes into the router
   router.use('/devices', require('./devices').routes)
   router.use('/devicesWithAllParameters', require('./devicesWithAllParameters').routes)
+  router.use('/probes', require('./probes').routes)
   return router
 }
