@@ -1,6 +1,7 @@
 /**
- * Devices routes
- *@module
+ * Devices routes.
+ * @author Luca Saccone
+ * @module
  */
 
 /**
@@ -28,8 +29,8 @@ import checkAuth from '../middleware/checkAuth'
 var Router = require('koa-router')
 
 /**
- * Function getting devices existing in the database
- * @param {Context} ctx - Koa context; Encapsulate request and response
+ * Getting devices existing in the database.
+ * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
  */
 export const devicesGet = async (ctx) => {
   const rows = await databaseRequest.getDevices()

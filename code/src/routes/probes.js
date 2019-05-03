@@ -1,4 +1,9 @@
 /**
+ * Probes routes.
+ * @author Luca Saccone
+ * @module
+ */
+/**
  * @swagger
  * tags:
  *    name: Probes
@@ -24,6 +29,10 @@ import checkAuth from '../middleware/checkAuth'
 import * as databaseRequest from '../controllers/databaseRequest'
 var Router = require('koa-router')
 
+/**
+ *
+ * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
+ */
 export const probesGet = async (ctx) => {
   const probeId = ctx.params.probeId
   if (isNaN(probeId)) {

@@ -1,6 +1,5 @@
 /**
  * This module bootstrap the Device management Application (DmA).
- *
  * @author Luca Saccone
  * @module
  */
@@ -12,7 +11,7 @@ const logHeader = 'Device Management API server'
 console.log(`Node environment: ${process.env.NODE_ENV}`)
 
 /**
- * Convert API server address into a descriptive string
+ * Convert API server address into a descriptive string.
  */
 const bind = () => {
   const addr = apiServer.address()
@@ -24,7 +23,7 @@ const bind = () => {
 }
 
 /**
- * Server 'listening' event handler
+ * Server 'listening' event handler.
  */
 const onListening = () => {
   console.log(`${logHeader}: Listening on ${bind()}...`)

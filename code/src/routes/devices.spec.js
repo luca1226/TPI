@@ -1,6 +1,6 @@
 import 'mocha'
 import * as td from 'testdouble'
-import { context } from '../../test/mock-utility' /*, expectMiddlewareFunctionThrow */
+import { context } from '../../test/mock-utility'
 import { expect } from 'chai'
 
 describe('Routes for devices', () => {

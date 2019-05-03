@@ -3,7 +3,6 @@
  *
  * This module contains an error middleware function for any Koa application.
  * @requires koa-logger It uses internally the logger added to the Koa context by the koa-logger.
- *
  * @author Luca Saccone
  * @module
  */
@@ -12,8 +11,8 @@
  * uncaught error handler middleware for koa
  *
  * This middleware is intended to catch any unexpected app error in API route processing.
- * @param {Koa.Context} ctx - the Koa context for the received request
- * @param {Function} next - the next middleware to call
+ * @param {Koa.Context} ctx - the Koa context for the received request.
+ * @param {Function} next - the next middleware to call.
  * @returns {Promise<void>} - Returns the middleware function to use with a koa server.
  */
 const errorMiddleware = async (ctx, next) => {

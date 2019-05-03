@@ -1,5 +1,6 @@
 /**
- * Devices with all parameters routes
+ * Devices with all parameters routes.
+ * @author Luca Saccone
  * @module
  */
 
@@ -37,8 +38,8 @@ import * as databaseRequest from '../controllers/databaseRequest'
 var Router = require('koa-router')
 
 /**
- * Function getting devices existing in the database
- * @param {Context} ctx - Koa context; Encapsulate request and response
+ * Getting devices with all parameters existing in the database.
+ * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
  */
 export const devicesGet = async (ctx) => {
   const rows = await databaseRequest.getDevicesWithAllParameters()
@@ -53,6 +54,10 @@ export const devicesGet = async (ctx) => {
   ctx.body = JSON.stringify(devices)
 }
 
+/**
+ * Post a new device with all parameters.
+ * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
+ */
 export const devicesPost = async (ctx) => {
   const serialNumber = ctx.request.body.serialNumber
   const connectivity = ctx.request.body.connectivity
@@ -78,6 +83,10 @@ export const devicesPost = async (ctx) => {
   }
 }
 
+/**
+ * Deleting a device with all parameters.
+ * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
+ */
 export const deviceDelete = async (ctx) => {
   const id = ctx.params.id
   if (isNaN(id)) {

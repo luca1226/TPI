@@ -1,11 +1,16 @@
 /**
- * User Auth module
+ * User Authentication module.
+ * @author Luca Saccone
  * @module
  */
 import * as jwt from 'jsonwebtoken'
 import * as bcrypt from 'bcryptjs'
 import * as databaseRequest from './databaseRequest'
 
+/**
+ * Sign up a new user.
+ * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
+ */
 export const signUp = async (ctx) => {
   // check that the given email does not exist into the DB. if yes return an error, if no continue the request processing
   const userEmailExistsInDB = await databaseRequest.getUserEmail(ctx.request.body.email)
@@ -25,6 +30,10 @@ export const signUp = async (ctx) => {
   }
 }
 
+/**
+ * Login a user.
+ * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
+ */
 export const login = async (ctx) => {
   // check that the given email exists into the DB. If no it returns an error, if yes if continue the request processing.
   const userExistsInDB = await databaseRequest.getUserEmailAndPassword(ctx.request.body.email)
@@ -32,8 +41,9 @@ export const login = async (ctx) => {
   if (userExistsInDB.length < 1) {
     ctx.throw(401, 'Auth failed')
   }
-  // compare the given and the exitsting password to see if they match
+  // compare the given and the existing password to see if they match
   if (await bcrypt.compare(ctx.request.body.password, userExistsInDB[0].userPassword)) {
+    // we succed to idenify the user: return the authorization token. The requester will have to use this token in following messages
     const token = jwt.sign({
       email: userExistsInDB[0].userEmail,
       password: userExistsInDB[0].userPassword
@@ -46,6 +56,7 @@ export const login = async (ctx) => {
     ctx.status = 200
     ctx.body = { message: 'Auth successful', token: token }
   } else {
+    // password does not match: return generic error 'unauthorized'
     ctx.throw(401, 'Auth failed')
   }
 }

@@ -1,5 +1,6 @@
 /**
- * Users routes
+ * Users routes.
+ * @author Luca Saccone
  * @module
  */
 /**
@@ -27,10 +28,18 @@
 import * as userAuth from '../controllers/userAuth'
 var Router = require('koa-router')
 
+/**
+ * Sign up a new user.
+ * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
+ */
 export const userSignUp = async (ctx) => {
   await userAuth.signUp(ctx)
 }
 
+/**
+ * Login user.
+ * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
+ */
 export const userLogin = async (ctx) => {
   await userAuth.login(ctx)
 }

@@ -1,9 +1,13 @@
 /**
- *
+ * Database request module.
+ * @author Luca Saccone
  * @module
  */
 import mysql from 'mysql'
 
+/**
+ * Creation of the connection to the DB.
+ */
 const connection = mysql.createConnection({
   host: process.env.HOST,
   user: process.env.DATABASEUSER,
@@ -11,6 +15,9 @@ const connection = mysql.createConnection({
   database: process.env.DATABASENAME
 })
 
+/**
+ * Connection to the DB.
+ */
 connection.connect((err, result) => {
   if (err) {
     console.error('Error:- ' + err.stack)
@@ -20,7 +27,8 @@ connection.connect((err, result) => {
 })
 
 /**
- * @returns {Promise<void>}
+ * Getting all SN that are in the DB.
+ * @returns {Promise}
  */
 export const getDevices = () => {
   return new Promise((resolve, reject) => {
@@ -32,7 +40,8 @@ export const getDevices = () => {
 }
 
 /**
- * @returns {Promise<void>}
+ * Getting all devices that are in the DB.
+ * @returns {Promise}
  */
 export const getDevicesWithAllParameters = () => {
   return new Promise((resolve, reject) => {
@@ -43,6 +52,10 @@ export const getDevicesWithAllParameters = () => {
   })
 }
 
+/**
+ * Change probe name in ID.
+ * @param {String} probe - probe name.
+ */
 const knowIdProbe = (probe) => {
   let idProbe
   if (probe === 'Amtax sc') {
@@ -73,6 +86,10 @@ const knowIdProbe = (probe) => {
   return idProbe
 }
 
+/**
+ * Change connectivity name in ID.
+ * @param {String} connectivity - connectivity name.
+ */
 const knowIdConnectivity = (connectivity) => {
   let idConnectivity
   if (connectivity === 'lan') {
@@ -85,6 +102,14 @@ const knowIdConnectivity = (connectivity) => {
   return idConnectivity
 }
 
+/**
+ * Insert new device in the DB.
+ * @param {String} serialNumber - SN of the new device.
+ * @param {String} connectivity - Connectivity of the new device.
+ * @param {String} firstProbe - First probe of the new device.
+ * @param {String} secondProbe - Second probe of the new Device.
+ * @returns {Promise}
+ */
 export const insertDevice = (serialNumber, connectivity, firstProbe, secondProbe) => {
   let idFirstProbe = knowIdProbe(firstProbe)
   let idSecondProbe = knowIdProbe(secondProbe)
@@ -97,6 +122,11 @@ export const insertDevice = (serialNumber, connectivity, firstProbe, secondProbe
   })
 }
 
+/**
+ * Delete device in the DB.
+ * @param {Number} idController - Identification number of the controller to be deleted.
+ * @returns {Promise}
+ */
 export const deleteDevice = (idController) => {
   return new Promise((resolve, reject) => {
     connection.query(`DELETE FROM controller WHERE controller.idController = ${idController}`, (error, rows) => {
@@ -106,6 +136,11 @@ export const deleteDevice = (idController) => {
   })
 }
 
+/**
+ * Getting a given SN of a device that are in the DB.
+ * @param {String} serialNumber - Serial Number of the device.
+ * @returns {Promise}
+ */
 export const getSerialNumber = (serialNumber) => {
   return new Promise((resolve, reject) => {
     connection.query(`SELECT serialNumber from controller WHERE "${serialNumber}" = serialNumber`, (error, rows) => {
@@ -115,6 +150,11 @@ export const getSerialNumber = (serialNumber) => {
   })
 }
 
+/**
+ * Getting numbers of a given probe.
+ * @param {number} id - Identification Number of the given probe.
+ * @returns {Promise}
+ */
 export const getNumberOfProbeType = (id) => {
   return new Promise((resolve, reject) => {
     connection.query(`SELECT COUNT(*) as "probes" FROM controller WHERE idProbeOne = ${id}`
@@ -133,6 +173,11 @@ export const getNumberOfProbeType = (id) => {
   })
 }
 
+/**
+ * Getting a given email from the DB.
+ * @param {String} email - Given email of the user.
+ * @returns {Promise}
+ */
 export const getUserEmail = (email) => {
   return new Promise((resolve, reject) => {
     connection.query(`SELECT userEmail from user WHERE "${email}" = userEmail`, (error, rows) => {
@@ -143,6 +188,11 @@ export const getUserEmail = (email) => {
   })
 }
 
+/**
+ * Getting user from the DB.
+ * @param {*} email - Given email of the user.
+ * @returns {Promise}
+ */
 export const getUserEmailAndPassword = (email) => {
   return new Promise((resolve, reject) => {
     connection.query(`SELECT userEmail, userPassword from user WHERE "${email}" = userEmail`, (error, rows) => {
@@ -152,6 +202,12 @@ export const getUserEmailAndPassword = (email) => {
   })
 }
 
+/**
+ * Posting new user into the DB.
+ * @param {String} email - Email of the new user.
+ * @param {String} passwordHash - Password of the new user.
+ * @returns {Promise}
+ */
 export const postNewUser = (email, passwordHash) => {
   return new Promise((resolve, reject) => {
     connection.query(`INSERT INTO user (idUser, userEmail, userPassword) VALUES (NULL, '${email}', '${passwordHash}')`, (error, rows) => {

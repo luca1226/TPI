@@ -3,23 +3,17 @@
  *
  * This module contains an log middleware function for any Koa application.
  * It logs automatically, in a concise manner, any incoming request and its response.
- *
- * @requires ../utils/logger The application logger
  * @author Luca Saccone
  * @module
  */
-// import log from '../utils/logger'
 
 /**
- * The koa logging middleware function
+ * The koa logging middleware function.
  * @param {Context} ctx - the koa context of the received request.
  * @param {Promise} next - the function to call to pass the request to the next middleware.
  */
 const logMiddleware = async (ctx, next) => {
   const startTime = Date.now()
-
-  // provide a logger instance to any following middleware
-  // ctx.log = log
 
   // first call next middleware to let them do their work
   await next()
