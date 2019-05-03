@@ -24,6 +24,7 @@
  */
 
 import * as databaseRequest from '../controllers/databaseRequest'
+import checkAuth from '../middleware/checkAuth'
 var Router = require('koa-router')
 
 /**
@@ -61,6 +62,6 @@ const router = new Router()
  *               schema:
  *                 $ref: '#/components/schemas/Devices'
  * */
-router.get('get-devices-serialNumber', '/', devicesGet)
+router.get('get-devices-serialNumber', '/', checkAuth, devicesGet)
 
 export const routes = router.routes()

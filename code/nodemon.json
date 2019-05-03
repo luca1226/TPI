@@ -16,6 +16,7 @@
     "DATABASEUSER": "tpiUser",
     "DATABASEPASSWORD": "tpiPassword",
     "DATABASENAME": "SC4200c_development",
+    "JWT_KEY": "my_secret_jwt_pwd",
     "PORT": 3000
   }
 }

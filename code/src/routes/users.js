@@ -1,4 +1,7 @@
-
+/**
+ * Users routes
+ * @module
+ */
 /**
  * @swagger
  * tags:
@@ -21,3 +24,97 @@
  *                   type: string
  *                   description: password of the user
  */
+import * as userAuth from '../controllers/userAuth'
+var Router = require('koa-router')
+
+export const userSignUp = async (ctx) => {
+  await userAuth.signUp(ctx)
+}
+
+export const userLogin = async (ctx) => {
+  await userAuth.login(ctx)
+}
+
+const router = new Router()
+
+/**
+ * @swagger
+ * /users/signup:
+ *   post:
+ *    summary: Create a new user
+ *    description: Insert a new user in the database
+ *    tags: [Users]
+ *    operationId: post_new_user
+ *    parameters:
+ *      - in: header
+ *        name: email
+ *        description: email of the user
+ *        required: true
+ *        schema:
+ *          type: string
+ *      - in: header
+ *        name: password
+ *        description: password of the user
+ *        required: true
+ *        schema:
+ *          type: string
+ *    requestBody:
+ *       description: a JSON object containing user information
+ *       content:
+ *          application/json:
+ *                schema:
+ *                    $ref: '#/components/schemas/Users'
+ *    responses:
+ *        '201':
+ *           description: User created
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/Users'
+ *        '409':
+ *           description: Mail exist
+ *        '500':
+ *           description: Internal Server Error
+ */
+router.post('post-a-user', '/signup', userSignUp)
+
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *    summary: Log a new user
+ *    description: Log the user into the API
+ *    tags: [Users]
+ *    operationId: log_new_user
+ *    parameters:
+ *      - in: header
+ *        name: email
+ *        description: email of the user
+ *        required: true
+ *        schema:
+ *          type: string
+ *      - in: header
+ *        name: password
+ *        description: password of the user
+ *        required: true
+ *        schema:
+ *          type: string
+ *    requestBody:
+ *       description: a JSON object containing user information
+ *       content:
+ *          application/json:
+ *                schema:
+ *                    $ref: '#/components/schemas/Users'
+ *    responses:
+ *        '200':
+ *           description: Authentication successful
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/Users'
+ *        '401':
+ *           description: Authentication failed
+ */
+router.post('log-a-user', '/login', userLogin)
+
+export const routes = router.routes()

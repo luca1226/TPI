@@ -21,8 +21,8 @@ describe('Routes for devices', () => {
   describe('GET', () => {
     it('returns valid json devices', async () => {
       // act
-      const expected = '{"devices":[{"serial number":"HL001_17386_000001729709"}]}'
       const actual = [{ 'serial number': 'HL001_17386_000001729709' }]
+      const expected = '{"devices":[{"serial number":"HL001_17386_000001729709"}]}'
       td.when(mock.getDevices()).thenResolve(actual)
 
       // arrange

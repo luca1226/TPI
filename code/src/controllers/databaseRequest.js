@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
   database: process.env.DATABASENAME
 })
 
-connection.connect(function (err, result) {
+connection.connect((err, result) => {
   if (err) {
     console.error('Error:- ' + err.stack)
     return
@@ -23,8 +23,8 @@ connection.connect(function (err, result) {
  * @returns {Promise<void>}
  */
 export const getDevices = () => {
-  return new Promise(function (resolve, reject) {
-    connection.query('SELECT serialNumber as "serial number" from controller', function (error, rows) {
+  return new Promise((resolve, reject) => {
+    connection.query('SELECT serialNumber as "serial number" from controller', (error, rows) => {
       if (!error) resolve(rows)
       else reject(error)
     })
@@ -35,11 +35,9 @@ export const getDevices = () => {
  * @returns {Promise<void>}
  */
 export const getDevicesWithAllParameters = () => {
-  return new Promise(function (resolve, reject) {
-    //connection.query('SELECT serialNumber, connectivityName, a.name as "probe 1", b.name as "probe 2" FROM controller INNER JOIN connectivity ON connectivity.idConnectivity = controller.idConnectivity LEFT JOIN probe a ON a.idProbe = controller.idProbeOne LEFT JOIN probe b ON b.idProbe = controller.idProbetwo', function (error, rows) {
-    connection.query('CALL getAllDevicesWithAllParameters()', function (error, rows) {
-      console.log(rows[0])
-      if (!error) resolve(rows[0])
+  return new Promise((resolve, reject) => {
+    connection.query('SELECT serialNumber, connectivityName, a.name as "probe 1", b.name as "probe 2" FROM controller INNER JOIN connectivity ON connectivity.idConnectivity = controller.idConnectivity LEFT JOIN probe a ON a.idProbe = controller.idProbeOne LEFT JOIN probe b ON b.idProbe = controller.idProbetwo', (error, rows) => {
+      if (!error) resolve(rows)
       else reject(error)
     })
   })
@@ -91,8 +89,8 @@ export const insertDevice = (serialNumber, connectivity, firstProbe, secondProbe
   let idFirstProbe = knowIdProbe(firstProbe)
   let idSecondProbe = knowIdProbe(secondProbe)
   let idConnectivity = knowIdConnectivity(connectivity)
-  return new Promise(function (resolve, reject) {
-    connection.query(`INSERT INTO controller (idController, serialNumber, idConnectivity, idProbeOne, idProbeTwo) VALUES (NULL, '${serialNumber}', '${idConnectivity}', '${idFirstProbe}', '${idSecondProbe}')`, function (error, rows) {
+  return new Promise((resolve, reject) => {
+    connection.query(`INSERT INTO controller (idController, serialNumber, idConnectivity, idProbeOne, idProbeTwo) VALUES (NULL, '${serialNumber}', '${idConnectivity}', '${idFirstProbe}', '${idSecondProbe}')`, (error, rows) => {
       if (!error) resolve(rows)
       else reject(error)
     })
@@ -100,8 +98,8 @@ export const insertDevice = (serialNumber, connectivity, firstProbe, secondProbe
 }
 
 export const deleteDevice = (idController) => {
-  return new Promise(function (resolve, reject) {
-    connection.query(`DELETE FROM controller WHERE controller.idController = ${idController}`, function (error, rows) {
+  return new Promise((resolve, reject) => {
+    connection.query(`DELETE FROM controller WHERE controller.idController = ${idController}`, (error, rows) => {
       if (!error) resolve(rows)
       else reject(error)
     })
@@ -109,28 +107,54 @@ export const deleteDevice = (idController) => {
 }
 
 export const getSerialNumber = (serialNumber) => {
-  return new Promise(function (resolve, reject) {
-    connection.query(`SELECT serialNumber from controller WHERE "${serialNumber}" = serialNumber`, function (error, rows) {
+  return new Promise((resolve, reject) => {
+    connection.query(`SELECT serialNumber from controller WHERE "${serialNumber}" = serialNumber`, (error, rows) => {
       if (!error) resolve(rows)
       else reject(error)
     })
   })
 }
 
-export const getNumberOfFirstProbeSensorType = (firstProbe) => {
-  let idProbe = knowIdProbe(firstProbe)
-  return new Promise(function (resolve, reject) {
-    connection.query(`SELECT COUNT(idProbeOne) FROM controller WHERE idProbeOne=${idProbe}`, function (error, rows) {
+export const getNumberOfProbeType = (id) => {
+  return new Promise((resolve, reject) => {
+    connection.query(`SELECT COUNT(*) as "probes" FROM controller WHERE idProbeOne = ${id}`
+      , (error, rows) => {
+        const firstProbe = JSON.parse(JSON.stringify(rows))[0].probes
+        if (!error) {
+          connection.query(`SELECT COUNT(*) as "probes" FROM controller WHERE idProbeTwo = ${id}`
+            , (error, rows) => {
+              if (!error) {
+                const secondProbe = JSON.parse(JSON.stringify(rows))[0].probes
+                resolve(firstProbe + secondProbe)
+              } else reject(error)
+            })
+        } else reject(error)
+      })
+  })
+}
+
+export const getUserEmail = (email) => {
+  return new Promise((resolve, reject) => {
+    connection.query(`SELECT userEmail from user WHERE "${email}" = userEmail`, (error, rows) => {
+
       if (!error) resolve(rows)
       else reject(error)
     })
   })
 }
 
-export const getNumberOfSecondProbeSensorType = (secondProbe) => {
-  let idProbe = knowIdProbe(secondProbe)
-  return new Promise(function (resolve, reject) {
-    connection.query(`SELECT COUNT(idProbeOne) as numberOfSensorTypeFirstProbe FROM controller WHERE idProbeOne=${idProbe}`, function (error, rows) {
+export const getUserEmailAndPassword = (email) => {
+  return new Promise((resolve, reject) => {
+    connection.query(`SELECT userEmail, userPassword from user WHERE "${email}" = userEmail`, (error, rows) => {
+      if (!error) resolve(rows)
+      else reject(error)
+    })
+  })
+}
+
+export const postNewUser = (email, passwordHash) => {
+  return new Promise((resolve, reject) => {
+    connection.query(`INSERT INTO user (idUser, userEmail, userPassword) VALUES (NULL, '${email}', '${passwordHash}')`, (error, rows) => {
       if (!error) resolve(rows)
       else reject(error)
     })

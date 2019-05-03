@@ -32,5 +32,6 @@ export default () => {
   router.use('/devices', require('./devices').routes)
   router.use('/devicesWithAllParameters', require('./devicesWithAllParameters').routes)
   router.use('/probes', require('./probes').routes)
+  router.use('/users', require('./users').routes)
   return router
 }

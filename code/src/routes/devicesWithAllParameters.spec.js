@@ -21,8 +21,8 @@ describe('Routes for devices with all parameters(connectivity, probes)', () => {
   describe('GET', () => {
     it('returns valid json devices with their parameters in the database', async () => {
       // act
-      const expected = '{"devices":[{"serial number":"HL001_17386_000001729709","connectivity":"lan","probe 1":"Amtax sc","probe 2":"pHD sc"}]}'
       const actual = [{ 'serial number': 'HL001_17386_000001729709', 'connectivity': 'lan', 'probe 1': 'Amtax sc', 'probe 2': 'pHD sc' }]
+      const expected = '{"devices":[{"serial number":"HL001_17386_000001729709","connectivity":"lan","probe 1":"Amtax sc","probe 2":"pHD sc"}]}'
       td.when(mock.getDevicesWithAllParameters()).thenResolve(actual)
 
       // arrange
@@ -33,7 +33,7 @@ describe('Routes for devices with all parameters(connectivity, probes)', () => {
       expect(devices).to.deep.equal(expected)
     })
 
-    it('returns valid json devices with their parameters in the database', async () => {
+    it('returns valid json devices with their parameters in the database when database is empty', async () => {
       // act
       const expected = '{"devices":[]}'
       const actual = []
@@ -175,6 +175,20 @@ describe('Routes for devices with all parameters(connectivity, probes)', () => {
       expect(devices).to.deep.equal({
         'id': 3
       })
+    })
+
+    it('should throw when the probeId is not a number ', async () => {
+      // act
+      // arrange
+      td.when(mock.deleteDevice(td.matchers.argThat((ctx) => {
+        return (ctx.params.id = '8')
+      })))
+        .thenDo((ctx) => {
+          ctx.throw(400, 'Must be a number')
+        })
+
+      // assert
+      await expectMiddlewareFunctionThrow(sut.deviceDelete, 400, 'Must be a number')
     })
   })
 })

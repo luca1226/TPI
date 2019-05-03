@@ -8,7 +8,7 @@ let expectedError // the error we expect the SUT will throw
 let wrongFirstArg
 let wrongSecondArg
 
-beforeEach(function () {
+beforeEach(() => {
   expectedError = new Error('expected exception')
   wrongFirstArg = new Error('wrong 1st arg')
   wrongSecondArg = new Error('wrong 2nd arg')
@@ -17,7 +17,7 @@ beforeEach(function () {
   context.request.body = {} // a 'body' property is always added to the request object by the 'koa-bodyparser'  middleware
   context.params = {}
 })
-afterEach(function () {
+afterEach(() => {
   td.reset()
 })
 

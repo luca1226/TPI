@@ -32,6 +32,7 @@
  *                   description: name of the second probe of the devices
 
  */
+import checkAuth from '../middleware/checkAuth'
 import * as databaseRequest from '../controllers/databaseRequest'
 var Router = require('koa-router')
 
@@ -67,10 +68,6 @@ export const devicesPost = async (ctx) => {
     ctx.throw(400, 'Second probe is empty')
   }
 
-  const serialNumberIsInTheDatabase = await databaseRequest.getSerialNumber(serialNumber)
-  if (undefined !== serialNumberIsInTheDatabase && serialNumberIsInTheDatabase.length === 0) {
-    ctx.throw(400, 'Serial number is already in the database')
-  }
   databaseRequest.insertDevice(serialNumber, connectivity, firstProbe, secondProbe)
 
   ctx.body = {
@@ -83,6 +80,9 @@ export const devicesPost = async (ctx) => {
 
 export const deviceDelete = async (ctx) => {
   const id = ctx.params.id
+  if (isNaN(id)) {
+    ctx.throw(400, 'Must be a number')
+  }
   await databaseRequest.deleteDevice(id)
   ctx.body = {
     id
@@ -108,7 +108,7 @@ const router = new Router()
  *                 $ref: '#/components/schemas/DevicesWithAllParameters'
  *
  */
-router.get('get-devices-with-all-parameters', '/', devicesGet)
+router.get('get-devices-with-all-parameters', '/', checkAuth, devicesGet)
 
 /**
  * @swagger
@@ -156,7 +156,7 @@ router.get('get-devices-with-all-parameters', '/', devicesGet)
  *                 $ref: '#/components/schemas/DevicesWithAllParameters'
  *
  */
-router.post('post-a-device', '/', devicesPost)
+router.post('post-a-device', '/', checkAuth, devicesPost)
 
 /**
  * @swagger
@@ -177,6 +177,6 @@ router.post('post-a-device', '/', devicesPost)
  *        '200':
  *           description: Successfully deleting the device
  */
-router.delete('delete-a-device', '/:id', deviceDelete)
+router.delete('delete-a-device', '/:id', checkAuth, deviceDelete)
 
 export const routes = router.routes()
