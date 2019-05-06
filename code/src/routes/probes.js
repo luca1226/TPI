@@ -30,8 +30,10 @@ import * as databaseRequest from '../controllers/databaseRequest'
 var Router = require('koa-router')
 
 /**
- *
- * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
+ * Getting number of a given probe that are in DB.
+ * @function probesGet
+ * @async
+ * @param {Context} ctx - Koa context; Encapsulate request and response.
  */
 export const probesGet = async (ctx) => {
   const probeId = ctx.params.probeId

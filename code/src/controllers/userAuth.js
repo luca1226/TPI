@@ -9,6 +9,8 @@ import * as databaseRequest from './databaseRequest'
 
 /**
  * Sign up a new user.
+ * @function signUp
+ * @async
  * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
  */
 export const signUp = async (ctx) => {
@@ -22,8 +24,6 @@ export const signUp = async (ctx) => {
     const hash = await bcrypt.hash(ctx.request.body.password, 10)
     // encryption succeed: create the user in the DB
     await databaseRequest.postNewUser(ctx.request.body.email, hash)
-    ctx.status = 201
-    ctx.body = { message: 'User created' }
   } catch (error) {
     // encryption failed: return generic auth error
     ctx.throw(500, error)
@@ -32,6 +32,8 @@ export const signUp = async (ctx) => {
 
 /**
  * Login a user.
+ * @function login
+ * @async
  * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
  */
 export const login = async (ctx) => {

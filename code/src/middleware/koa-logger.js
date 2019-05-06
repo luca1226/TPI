@@ -9,6 +9,8 @@
 
 /**
  * The koa logging middleware function.
+ * @function logMiddleware
+ * @async
  * @param {Context} ctx - the koa context of the received request.
  * @param {Promise} next - the function to call to pass the request to the next middleware.
  */

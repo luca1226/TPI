@@ -7,6 +7,8 @@ import Router from 'koa-router'
 
 /**
  * handles the GET 'home' route.
+ * @function homeGet
+ * @async
  * @param {Koa.Context} ctx Koa context; Encapsulate request and response.
  */
 const homeGet = async (ctx) => {

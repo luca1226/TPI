@@ -39,6 +39,8 @@ var Router = require('koa-router')
 
 /**
  * Getting devices with all parameters existing in the database.
+ * @function devicesGet
+ * @async
  * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
  */
 export const devicesGet = async (ctx) => {
@@ -56,6 +58,8 @@ export const devicesGet = async (ctx) => {
 
 /**
  * Post a new device with all parameters.
+ * @function devicesPost
+ * @async
  * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
  */
 export const devicesPost = async (ctx) => {
@@ -85,6 +89,8 @@ export const devicesPost = async (ctx) => {
 
 /**
  * Deleting a device with all parameters.
+ * @function deviceDelete
+ * @async
  * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
  */
 export const deviceDelete = async (ctx) => {

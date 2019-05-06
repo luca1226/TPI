@@ -30,18 +30,35 @@ var Router = require('koa-router')
 
 /**
  * Sign up a new user.
+ * @function userSignUp
+ * @async
  * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
  */
 export const userSignUp = async (ctx) => {
+  if (ctx.request.body.email === '') {
+    ctx.throw(400, 'Email is empty')
+  } else if (ctx.request.body.password === '') {
+    ctx.throw(400, 'Password is empty')
+  }
   await userAuth.signUp(ctx)
+
+  ctx.body = { message: 'User created' }
 }
 
 /**
  * Login user.
+ * @function userLogin
+ * @async
  * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
  */
 export const userLogin = async (ctx) => {
+  if (ctx.request.body.email === '') {
+    ctx.throw(400, 'Email is empty')
+  } else if (ctx.request.body.password === '') {
+    ctx.throw(400, 'Password is empty')
+  }
   await userAuth.login(ctx)
+  ctx.body = { message: 'Auth successful' }
 }
 
 const router = new Router()

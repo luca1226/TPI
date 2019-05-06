@@ -11,6 +11,8 @@
  * uncaught error handler middleware for koa
  *
  * This middleware is intended to catch any unexpected app error in API route processing.
+ * @function errorMiddleware
+ * @async
  * @param {Koa.Context} ctx - the Koa context for the received request.
  * @param {Function} next - the next middleware to call.
  * @returns {Promise<void>} - Returns the middleware function to use with a koa server.

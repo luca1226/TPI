@@ -12,6 +12,7 @@ console.log(`Node environment: ${process.env.NODE_ENV}`)
 
 /**
  * Convert API server address into a descriptive string.
+ * @function bind
  */
 const bind = () => {
   const addr = apiServer.address()
@@ -24,6 +25,7 @@ const bind = () => {
 
 /**
  * Server 'listening' event handler.
+ * @function onListening
  */
 const onListening = () => {
   console.log(`${logHeader}: Listening on ${bind()}...`)
@@ -31,6 +33,7 @@ const onListening = () => {
 
 /**
  * Server 'error' event handler that catch errors raised on listening start.
+ * @function onError
  * @param {NodeJS.ErrnoException} error - The error raised by the the server.
  */
 const onError = (error) => {

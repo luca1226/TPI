@@ -7,6 +7,8 @@ import * as jwt from 'jsonwebtoken'
 
 /**
  * Check if a user is authenticated.
+ * @function checkAuth
+ * @async
  * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
  * @param {*} next
  */

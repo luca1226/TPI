@@ -28,6 +28,7 @@ connection.connect((err, result) => {
 
 /**
  * Getting all SN that are in the DB.
+ * @function getDevices
  * @returns {Promise}
  */
 export const getDevices = () => {
@@ -41,6 +42,7 @@ export const getDevices = () => {
 
 /**
  * Getting all devices that are in the DB.
+ * @function getDevicesWithAllParameters
  * @returns {Promise}
  */
 export const getDevicesWithAllParameters = () => {
@@ -54,7 +56,9 @@ export const getDevicesWithAllParameters = () => {
 
 /**
  * Change probe name in ID.
+ * @function knowIdProbe
  * @param {String} probe - probe name.
+ * @returns {Number}
  */
 const knowIdProbe = (probe) => {
   let idProbe
@@ -88,7 +92,9 @@ const knowIdProbe = (probe) => {
 
 /**
  * Change connectivity name in ID.
+ * @function knowIdConnectivity
  * @param {String} connectivity - connectivity name.
+ * @returns {Number}
  */
 const knowIdConnectivity = (connectivity) => {
   let idConnectivity
@@ -104,6 +110,7 @@ const knowIdConnectivity = (connectivity) => {
 
 /**
  * Insert new device in the DB.
+ * @function insertDevice
  * @param {String} serialNumber - SN of the new device.
  * @param {String} connectivity - Connectivity of the new device.
  * @param {String} firstProbe - First probe of the new device.
@@ -124,6 +131,7 @@ export const insertDevice = (serialNumber, connectivity, firstProbe, secondProbe
 
 /**
  * Delete device in the DB.
+ * @function deleteDevice
  * @param {Number} idController - Identification number of the controller to be deleted.
  * @returns {Promise}
  */
@@ -138,6 +146,7 @@ export const deleteDevice = (idController) => {
 
 /**
  * Getting a given SN of a device that are in the DB.
+ * @function getSerialNumber
  * @param {String} serialNumber - Serial Number of the device.
  * @returns {Promise}
  */
@@ -152,6 +161,7 @@ export const getSerialNumber = (serialNumber) => {
 
 /**
  * Getting numbers of a given probe.
+ * @function getNumberOfProbeType
  * @param {number} id - Identification Number of the given probe.
  * @returns {Promise}
  */
@@ -175,6 +185,7 @@ export const getNumberOfProbeType = (id) => {
 
 /**
  * Getting a given email from the DB.
+ * @function getUserEmail
  * @param {String} email - Given email of the user.
  * @returns {Promise}
  */
@@ -190,7 +201,8 @@ export const getUserEmail = (email) => {
 
 /**
  * Getting user from the DB.
- * @param {*} email - Given email of the user.
+ * @function getUserEmailAndPassword
+ * @param {String} email - Given email of the user.
  * @returns {Promise}
  */
 export const getUserEmailAndPassword = (email) => {
@@ -204,6 +216,7 @@ export const getUserEmailAndPassword = (email) => {
 
 /**
  * Posting new user into the DB.
+ * @function postNewUser
  * @param {String} email - Email of the new user.
  * @param {String} passwordHash - Password of the new user.
  * @returns {Promise}

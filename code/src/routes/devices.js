@@ -30,6 +30,8 @@ var Router = require('koa-router')
 
 /**
  * Getting devices existing in the database.
+ * @function devicesGet
+ * @async
  * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
  */
 export const devicesGet = async (ctx) => {
