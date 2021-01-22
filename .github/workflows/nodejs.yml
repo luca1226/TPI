@@ -19,11 +19,9 @@ jobs:
         node-version: [10.1]
 
     steps:
-    - name: CHange Directory
-      working-directory: ./code
-      run: |
-        npm i 
-        npm run test:unit 
-        npm run start
+    - run: npm i 
+    - run: npm run test:unit 
+    - run: npm run start
       env:
         CI: true
+        PROJECT_PATH: ./code
