@@ -19,7 +19,10 @@ jobs:
         node-version: [10.1]
 
     steps:
-    - run: cd code & npm i
+    - uses: master@1
+      with:
+        path: ~/code
+    - run: npm i
     - run: npm run test:unit
     - run: npm run start
       env:
