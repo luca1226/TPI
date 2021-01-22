@@ -20,7 +20,10 @@ jobs:
 
     steps:
     - name: CHange Directory
-      working-directory: code
-      run: npm i & npm run test:unit & npm run start
+      working-directory: ./code
+      run: |
+        npm i 
+        npm run test:unit 
+        npm run start
       env:
         CI: true
