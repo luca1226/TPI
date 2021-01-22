@@ -19,9 +19,8 @@ jobs:
         node-version: [10.1]
 
     steps:
-    - uses: master@1
-      with:
-        path: ~/code
+    - name: CHange Directory
+        working-directory: ./code
     - run: npm i
     - run: npm run test:unit
     - run: npm run start
