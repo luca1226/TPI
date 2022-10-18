@@ -12,11 +12,5 @@
   },
   "parserOptions": {
     "ecmaVersion": 2018
-  },
-  "rules": {
-    "space-before-function-paren": [
-      "error",
-      "never"
-    ]
   }
 }

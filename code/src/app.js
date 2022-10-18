@@ -3,7 +3,7 @@
  *
  * This module contains a class that build the Device management Application (DmA).
  * The builder class exposes a public property 'App' that is the built application, e.g. the EBApp.
- * The DmA built application is of type 'Koa'. It embeds an HTTP server that must be use to start the application.
+ * The built application is of type 'Koa'. It embeds an HTTP server that must be use to start the application.
  * The built application is exported by default.
  *
  * @author Luca Saccone
@@ -26,6 +26,7 @@ class AppBuilder {
   /**
    * The object of type 'Koa' that implements the 'device management API Server Application'.
    */
+  // eslint-disable-next-line space-before-function-paren
   constructor() {
     const app = new Koa()
 

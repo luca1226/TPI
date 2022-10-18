@@ -13,7 +13,7 @@ import * as databaseRequest from './databaseRequest'
  * @async
  * @param {Koa.Context} ctx - Koa context; Encapsulate request and response.
  */
-export const signUp = async (ctx) => {
+export const signUp = async(ctx) => {
   // check that the given email does not exist into the DB. if yes return an error, if no continue the request processing
   const userEmailExistsInDB = await databaseRequest.getUserEmail(ctx.request.body.email)
   if (userEmailExistsInDB.length >= 1) {
