@@ -28,8 +28,8 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-      working-directory: backend
+      working-directory: code
 
     - name: Run test
       run: npm run test:unit
-      working-directory: backend
+      working-directory: code
